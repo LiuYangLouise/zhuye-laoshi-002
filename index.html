@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reborn黑皮书 - 今日作业</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans SC', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #6C757D;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        .date {
+            color: #495057;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .content-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #e9ecef;
+        }
+        .title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .homework-content {
+            white-space: pre-line;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #495057;
+        }
+        .password-section {
+            background: #e8f4ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: block;
+        }
+        .password-input {
+            width: 200px;
+            padding: 12px;
+            border: 2px solid #84AFFF;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .password-button {
+            background-color: #84AFFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .password-button:hover {
+            background-color: #6A9CFF;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+        .footer {
+            text-align: center;
+            color: #6C757D;
+            font-size: 0.9rem;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        .subject-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .subject-item:last-child {
+            border-bottom: none;
+        }
+        .subject-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 10px;
+        }
+        .subject-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #495057;
+            padding-left: 10px;
+        }
+        .subject-content a {
+            color: #0066cc;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .subject-content a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .logo { font-size: 2rem; }
+            .content-box { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Reborn黑皮书</div>
+            <div class="subtitle">今日作业</div>
+            <div class="date">2026年01月30日 星期五</div>
+        </div>
+        
+        
+        <div class="password-section" id="passwordSection">
+            <div style="font-weight: 600; margin-bottom: 10px;">请输入老师提供的口令</div>
+            <input type="password" class="password-input" id="passwordInput" placeholder="输入口令">
+            <br>
+            <button class="password-button" id="passwordSubmit">查看作业</button>
+            <div class="error-message" id="errorMessage">口令错误，请重新输入</div>
+        </div>
+        
+        
+        <div class="content-box" id="contentBox" style="display: none;">
+            <div class="title">📚 今日作业内容</div>
+            <div id="homeworkDisplay">
+                <!-- 作业内容将动态显示 -->
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div>Reborn黑皮书 · 语言学习平台</div>
+            <div style="margin-top: 5px;">天天进步，每日新生</div>
+        </div>
+    </div>
+    
+    <script>
+        const homeworkData = {"vocab":"https://liuyanglouise.github.io/tingxie-laoshi/?student=true&password=xinsheng1234&words=%255B%257B%2522english%2522%253A%2522intelligence%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522mud%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522senior%2520advisor%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522water%2520treatment%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522ozone%2520layer%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522clever%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522coastal%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522be%2520closed%2520down%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522Self-employed%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522rainfall%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522temperature%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522self-centered%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522sunset%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522continent%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522excellent%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522resources%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522unnatural%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522night%2520tour%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522loyal%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522land%2520bridge%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522administration%2520officer%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522kindness%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522improvement%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522metal%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522creation%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522risk%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522recycling%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522sun%2520hat%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522patience%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522magnet%2522%252C%2522meaning%2522%253A%2522%2522%257D%255D","reading":"https://liuyanglouise.github.io/email-reading/","listening":"https://liuyanglouise.github.io/tingxie-laoshi/?student=true&password=xinsheng1234&words=%255B%257B%2522english%2522%253A%2522philosopher%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522confusion%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522arrow%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522capacity%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522machinery%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522protective%2520clothing%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522historical%2520map%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522puzzle%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522complex%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522wooden%2520sculpture%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522development%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522craft%2520%28%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522local%2520tribe%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522engineering%2520faculty%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522video%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522agricultural%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522television%2520drama%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522history%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522manufacturer%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522previous%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522depth%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522procedure%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522trade%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522video%2520recording%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522slave%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522museum%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522buried%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522magazine%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522mixture%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522multimedia%2520resources%2522%252C%2522meaning%2522%253A%2522%2522%257D%255D","speaking":"https://liuyanglouise.github.io/tuofukouyu-duihua-A-E/?student=true&voiceType=male&password=xinsheng1234&sentences=%255B%257B%2522english%2522%253A%2522Are%2520there%2520tall%2520buildings%2520near%2520your%2520home%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522Do%2520you%2520take%2520photos%2520of%2520buildings%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522Is%2520there%2520a%2520building%2520that%2520you%2520would%2520like%2520to%2520visit%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522Do%2520you%2520look%2520out%2520the%2520window%2520at%2520the%2520scenery%2520when%2520travelling%2520by%2520bus%2520or%2520car%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522Do%2520you%2520prefer%2520the%2520mountains%2520or%2520the%2520sea%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522Do%2520you%2520like%2520to%2520take%2520scenery%2520pictures%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522What%2520are%2520the%2520most%2520beautiful%2520sights%2520you%2520have%2520seen%2520while%2520traveling%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522Do%2520you%2520like%2520taking%2520pictures%2520of%2520different%2520views%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522Do%2520you%2520prefer%2520views%2520in%2520urban%2520areas%2520or%2520rural%2520areas%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522Do%2520you%2520prefer%2520views%2520in%2520your%2520own%2520country%2520or%2520in%2520other%2520countries%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522What%2520did%2520you%2520often%2520do%2520with%2520your%2520friends%2520in%2520your%2520childhood%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522What%2520do%2520you%2520think%2520is%2520the%2520most%2520important%2520at%2520the%2520moment%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522Do%2520you%2520have%2520any%2520plans%2520for%2520the%2520next%2520five%2520years%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%252C%257B%2522english%2522%253A%2522How%2520do%2520people%2520remember%2520each%2520stage%2520of%2520their%2520lives%253F%2522%252C%2522meaning%2522%253A%2522%2522%257D%255D","writing":"https://liuyanglouise.github.io/writing-jiaohu-0114/","other":"https://liuyanglouise.github.io/cihui-hanyi-xuanyingwen/?student=true&password=xinsheng1234&words=%255B%257B%2522english%2522%253A%2522landscape%2522%252C%2522meaning%2522%253A%2522%25E6%2599%25AF%25E8%25A7%2582%2522%257D%252C%257B%2522english%2522%253A%2522assign%2522%252C%2522meaning%2522%253A%2522%25E5%2588%2586%25E9%2585%258D%2522%257D%252C%257B%2522english%2522%253A%2522lopsided%2522%252C%2522meaning%2522%253A%2522%25E4%25B8%258D%25E5%25B9%25B3%25E8%25A1%25A1%25E7%259A%2584%2522%257D%252C%257B%2522english%2522%253A%2522inappropriate%2522%252C%2522meaning%2522%253A%2522%25E4%25B8%258D%25E6%2581%25B0%25E5%25BD%2593%25E7%259A%2584%2522%257D%252C%257B%2522english%2522%253A%2522revive%2522%252C%2522meaning%2522%253A%2522%25E5%25A4%258D%25E8%258B%258F%2522%257D%252C%257B%2522english%2522%253A%2522sufficiency%2522%252C%2522meaning%2522%253A%2522%25E5%2585%2585%25E8%25B6%25B3%2522%257D%252C%257B%2522english%2522%253A%2522cater%2522%252C%2522meaning%2522%253A%2522%25E8%25BF%258E%25E5%2590%2588%2522%257D%252C%257B%2522english%2522%253A%2522likelihood%2522%252C%2522meaning%2522%253A%2522%25E5%258F%25AF%25E8%2583%25BD%25E6%2580%25A7%2522%257D%252C%257B%2522english%2522%253A%2522symptom%2522%252C%2522meaning%2522%253A%2522%25E7%2597%2587%25E7%258A%25B6%2522%257D%252C%257B%2522english%2522%253A%2522involve%2522%252C%2522meaning%2522%253A%2522%25E6%25B6%2589%25E5%258F%258A%2522%257D%252C%257B%2522english%2522%253A%2522blight%2522%252C%2522meaning%2522%253A%2522%25E6%258D%259F%25E5%25AE%25B3%2522%257D%252C%257B%2522english%2522%253A%2522aid%2522%252C%2522meaning%2522%253A%2522%25E6%258F%25B4%25E5%258A%25A9%2522%257D%252C%257B%2522english%2522%253A%2522plagiarise%2522%252C%2522meaning%2522%253A%2522%25E6%258A%2584%25E8%25A2%25AD%2522%257D%252C%257B%2522english%2522%253A%2522damp%2522%252C%2522meaning%2522%253A%2522%25E6%25BD%25AE%25E6%25B9%25BF%25E7%259A%2584%2522%257D%252C%257B%2522english%2522%253A%2522demographic%2522%252C%2522meaning%2522%253A%2522%25E4%25BA%25BA%25E5%258F%25A3%25E7%25BB%259F%25E8%25AE%25A1%25E7%259A%2584%2522%257D%252C%257B%2522english%2522%253A%2522crisis%2522%252C%2522meaning%2522%253A%2522%25E5%258D%25B1%25E6%259C%25BA%2522%257D%252C%257B%2522english%2522%253A%2522conservative%2522%252C%2522meaning%2522%253A%2522%25E4%25BF%259D%25E5%25AE%2588%25E7%259A%2584%2522%257D%252C%257B%2522english%2522%253A%2522bungle%2522%252C%2522meaning%2522%253A%2522%25E6%2590%259E%25E7%25A0%25B8%2522%257D%252C%257B%2522english%2522%253A%2522inactive%2522%252C%2522meaning%2522%253A%2522%25E4%25B8%258D%25E6%25B4%25BB%25E8%25B7%2583%25E7%259A%2584%2522%257D%252C%257B%2522english%2522%253A%2522communal%2522%252C%2522meaning%2522%253A%2522%25E5%2585%25AC%25E5%2585%25B1%25E7%259A%2584%2522%257D%255D","password":"111111"};
+        const hasPassword = true;
+        
+        // 初始化显示
+        function initDisplay() {
+            if (!hasPassword) {
+                displayHomework();
+            }
+        }
+        
+        // 显示作业内容
+        function displayHomework() {
+            const container = document.getElementById('homeworkDisplay');
+            let html = '';
+            
+            const subjects = [
+                { id: 'vocab', name: '词汇', emoji: '📚' },
+                { id: 'reading', name: '阅读', emoji: '📖' },
+                { id: 'listening', name: '听力', emoji: '🎧' },
+                { id: 'speaking', name: '口语', emoji: '🗣️' },
+                { id: 'writing', name: '写作', emoji: '✍️' },
+                { id: 'other', name: '其他', emoji: '💌' }
+            ];
+            
+            let hasContent = false;
+            
+            subjects.forEach(subject => {
+                const content = homeworkData[subject.id];
+                if (content && content.trim() !== '') {
+                    hasContent = true;
+                    
+                    // 检查是否是URL
+                    const isUrl = content.startsWith('http://') || content.startsWith('https://');
+                    const displayContent = isUrl 
+                        ? `<a href="${content}" target="_blank">${content}</a>`
+                        : content;
+                    
+                    html += `
+                        <div class="subject-item">
+                            <div class="subject-title">
+                                <span>${subject.emoji}</span>
+                                <span>${subject.name}作业</span>
+                            </div>
+                            <div class="subject-content">${displayContent}</div>
+                        </div>
+                    `;
+                }
+            });
+            
+            if (!hasContent) {
+                html = '<div style="text-align: center; color: #6C757D; padding: 20px;">今日暂无作业，请等待老师布置。</div>';
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        // 密码验证功能
+        if (hasPassword) {
+            document.getElementById('passwordSubmit').addEventListener('click', function() {
+                const input = document.getElementById('passwordInput').value;
+                const errorMessage = document.getElementById('errorMessage');
+                
+                if (input === homeworkData.password) {
+                    document.getElementById('passwordSection').style.display = 'none';
+                    document.getElementById('contentBox').style.display = 'block';
+                    displayHomework();
+                } else {
+                    errorMessage.style.display = 'block';
+                    document.getElementById('passwordInput').value = '';
+                }
+            });
+            
+            // 支持回车键提交
+            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('passwordSubmit').click();
+                }
+            });
+        }
+        
+        // 页面加载时初始化
+        window.addEventListener('DOMContentLoaded', initDisplay);
+    </script>
+</body>
+</html>
