@@ -1456,20 +1456,20 @@
             const studentPageHTML = createStudentPageHTML();
             
             // 生成唯一的文件名：作业_年月日_时分秒.html
-            const now = new Date();
-            const dateStr = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
-            const timeStr = `${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String(now.getSeconds()).padStart(2,'0')}`;
-            const fileName = `作业_${dateStr}_${timeStr}.html`;
-            
-            // 保存数据
-            studentPageData = {
-                html: studentPageHTML,
-                fileName: fileName,
-                timestamp: now.getTime(),
-                date: getCurrentDate(),
-                githubUrl: `https://liuyanglouise.github.io/homework/${fileName}`
-            };
-            
+const now = new Date();
+const dateStr = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+const timeStr = `${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String(now.getSeconds()).padStart(2,'0')}`;
+const fileName = `作业_${dateStr}_${timeStr}.html`;
+
+// 保存数据
+studentPageData = {
+    html: studentPageHTML,
+    fileName: fileName,
+    timestamp: now.getTime(),
+    date: getCurrentDate(),
+    // 已修正！使用正确的用户名 liuyanglouise
+    githubUrl: `https://liuyanglouise.github.io/homework/${fileName}`
+};            
             // 显示上传指导
             displayStudentPageUrl();
             
@@ -1814,30 +1814,29 @@
         }
         
         // 更新GitHub使用说明
-        function updateGithubInstructions() {
-            if (!studentPageData) return;
-            
-            const githubLink = studentPageData.githubUrl;
-            const githubInstructions = document.getElementById('githubInstructions');
-            
-            githubInstructions.innerHTML = `
-                <ol>
-                    <li>文件已开始下载</li>
-                    <li>登录到你的GitHub账户</li>
-                    <li>进入你的<code>homework</code>仓库</li>
-                    <li>点击"Add file" → "Upload files"</li>
-                    <li>将下载的文件拖到上传区域</li>
-                    <li>填写提交信息，点击"Commit changes"</li>
-                    <li>等待几分钟，GitHub Pages会自动部署</li>
-                </ol>
-                <div style="background: #f0f9ff; padding: 10px; border-radius: 6px; margin-top: 10px;">
-                    <strong>学生访问链接（上传后）：</strong><br>
-                    <code style="color: #0066cc; word-break: break-all;">${githubLink}</code>
-                    <button onclick="copyToClipboard('${githubLink}')" style="margin-left: 10px; padding: 4px 8px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">复制链接</button>
-                </div>
-            `;
-        }
-        
+function updateGithubInstructions() {
+    if (!studentPageData) return;
+    
+    const githubLink = studentPageData.githubUrl;
+    const githubInstructions = document.getElementById('githubInstructions');
+    
+    githubInstructions.innerHTML = `
+        <ol>
+            <li>文件已开始下载</li>
+            <li>登录到你的GitHub账户</li>
+            <li>进入你的<code>homework</code>仓库</li>
+            <li>点击"Add file" → "Upload files"</li>
+            <li>将下载的文件拖到上传区域</li>
+            <li>填写提交信息，点击"Commit changes"</li>
+            <li>等待几分钟，GitHub Pages会自动部署</li>
+        </ol>
+        <div style="background: #f0f9ff; padding: 10px; border-radius: 6px; margin-top: 10px;">
+            <strong>学生访问链接（上传后）：</strong><br>
+            <code style="color: #0066cc; word-break: break-all;">${githubLink}</code>
+            <button onclick="copyToClipboard('${githubLink}')" style="margin-left: 10px; padding: 4px 8px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">复制链接</button>
+        </div>
+    `;
+}        
         // 全局复制函数
         window.copyToClipboard = function(text) {
             navigator.clipboard.writeText(text).then(() => {
